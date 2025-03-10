@@ -20,7 +20,6 @@ public class GrabUserServiceApplication {
 			System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
 			System.setProperty("DB_DRIVER", dotenv.get("DB_DRIVER"));
 			System.setProperty("JWT_SECRET", dotenv.get("JWT_SECRET"));
-			System.setProperty("PORT", dotenv.get("PORT_USER_SERVICE"));
 		} else {
 			// Running in Kubernetes (use environment variables)
 			System.setProperty("DB_URL", System.getenv("DB_URL"));
@@ -28,7 +27,6 @@ public class GrabUserServiceApplication {
 			System.setProperty("DB_PASSWORD", System.getenv("DB_PASSWORD"));
 			System.setProperty("DB_DRIVER", System.getenv("DB_DRIVER"));
 			System.setProperty("JWT_SECRET", System.getenv("JWT_SECRET"));
-			System.setProperty("PORT", System.getenv("PORT_API_GATEWAY"));
 		}
 		SpringApplication.run(GrabUserServiceApplication.class, args);
 	}
