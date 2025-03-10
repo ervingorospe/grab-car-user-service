@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  labels:
+    app: grab-user-service
+  name: grab-user-service
+  namespace: grab-car
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grab-user-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: grab-user-service
+    spec:
+      containers:
+        - image: ervincode/grabcar-user-service:${IMAGE_TAG}
+          imagePullPolicy: Always
+          name: grabcar-auth-service
+          env:
+            - name: ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: SPRING_PROFILES_ACTIVE
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: PORT_AUTH_SERVICE
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: DB_URL
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: DB_PASSWORD
+            - name: DB_DRIVER
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: DB_DRIVER
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secrets
+                  key: JWT_SECRET
+
+---
+#services
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: grab-user-service
+  name: grab-user-service
+  namespace: grab-car
+spec:
+  ports:
+    - port: 9000
+      protocol: TCP
+      targetPort: 9000
+  selector:
+    app: grab-user-service
+  sessionAffinity: None
+  type: ClusterIP
