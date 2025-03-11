@@ -25,7 +25,7 @@ spec:
       containers:
         - image: ervincode/grabcar-user-service:${IMAGE_TAG}
           imagePullPolicy: Always
-          name: grabcar-auth-service
+          name: grabcar-user-service
           env:
             - name: ENV
               valueFrom:
@@ -36,7 +36,7 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: app-config
-                  key: PORT_AUTH_SERVICE
+                  key: PORT_USER_SERVICE
             - name: DB_URL
               valueFrom:
                 secretKeyRef:
