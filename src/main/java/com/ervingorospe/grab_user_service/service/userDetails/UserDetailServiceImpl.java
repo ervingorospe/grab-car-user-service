@@ -1,7 +1,6 @@
 package com.ervingorospe.grab_user_service.service.userDetails;
 
 import com.ervingorospe.grab_user_service.model.DTO.UserProfileDTO;
-import com.ervingorospe.grab_user_service.model.entity.User;
 import com.ervingorospe.grab_user_service.model.entity.UserDetails;
 import com.ervingorospe.grab_user_service.repository.UserDetailsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,8 @@ public class UserDetailServiceImpl implements UserDetailService{
         userDetails.setBirthDate(profile.birthDate());
         userDetails.setContactNumber(profile.contactNumber());
 
-        return new UserProfileDTO(repository.save(userDetails));
+        UserDetails savedDetails = repository.save(userDetails);
+
+        return new UserProfileDTO(savedDetails);
     }
 }

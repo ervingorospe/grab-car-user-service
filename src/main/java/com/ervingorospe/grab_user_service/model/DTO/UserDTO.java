@@ -20,15 +20,15 @@ public record UserDTO(
     // Constructor accepting only User (extracting details from User entity)
     public UserDTO(User user) {
         this(
-                user.getId(),
-                user.getEmail(),
-                user.getUserRole(),
-                user.getCreatedAt(),
-                user.getActive(),
-                user.getUserDetails().getFirstName(),
-                user.getUserDetails().getLastName(),
-                user.getUserDetails().getBirthDate(),
-                user.getUserDetails().getContactNumber()
+            user.getId(),
+            user.getEmail(),
+            user.getUserRole(),
+            user.getCreatedAt(),
+            user.getActive(),
+            user.getUserDetails().getFirstName(),
+            user.getUserDetails().getLastName(),
+            user.getUserDetails().getBirthDate(),
+            user.getUserDetails().getContactNumber()
         );
     }
 }
