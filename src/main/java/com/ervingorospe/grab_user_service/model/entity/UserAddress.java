@@ -34,6 +34,25 @@ public class UserAddress {
     @Column(nullable = false)
     private double longitude;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    public UserAddress() {
+    }
+
+    public UserAddress(String label, String street, String city, String state, String postalCode, String country, double latitude, double longitude, User user) {
+        this.label = label;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.postalCode = postalCode;
+        this.country = country;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.user = user;
+    }
+
     public void setLabel(String label) {
         this.label = label;
     }
@@ -67,25 +86,6 @@ public class UserAddress {
     }
 
     public void setUser(User user) {
-        this.user = user;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    public UserAddress() {
-    }
-
-    public UserAddress(String label, String street, String city, String state, String postalCode, String country, double latitude, double longitude, User user) {
-        this.label = label;
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.postalCode = postalCode;
-        this.country = country;
-        this.latitude = latitude;
-        this.longitude = longitude;
         this.user = user;
     }
 
