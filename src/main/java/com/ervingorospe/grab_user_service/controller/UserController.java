@@ -39,4 +39,9 @@ public class UserController {
     public ResponseEntity<UserAddressDTO> updateUserAddress(@RequestBody @Valid UserAddressDTO addressDTO, @PathVariable String id) {
         return ResponseEntity.status(HttpStatus.OK).body(addressService.updateAddress(addressDTO, id));
     }
+
+    @PostMapping("/address/create/{id}")
+    public ResponseEntity<UserAddressDTO> saveUserAddress(@RequestBody @Valid UserAddressDTO addressDTO, @PathVariable String id) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(addressService.saveAddress(addressDTO, id));
+    }
 }

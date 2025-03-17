@@ -2,8 +2,10 @@ package com.ervingorospe.grab_user_service.service.userAddress;
 
 import com.ervingorospe.grab_user_service.handler.error.AddressNotFoundException;
 import com.ervingorospe.grab_user_service.model.DTO.UserAddressDTO;
+import com.ervingorospe.grab_user_service.model.entity.User;
 import com.ervingorospe.grab_user_service.model.entity.UserAddress;
 import com.ervingorospe.grab_user_service.repository.UserAddressRepo;
+import com.ervingorospe.grab_user_service.service.user.UserServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,11 @@ import java.util.UUID;
 @Service
 public class UserAddressServiceImpl implements UserAddressService{
     private final UserAddressRepo repository;
+    private final UserServiceImpl userService;
 
-    public UserAddressServiceImpl(UserAddressRepo repository) {
+    public UserAddressServiceImpl(UserAddressRepo repository, UserServiceImpl userService) {
         this.repository = repository;
+        this.userService = userService;
     }
 
     @Override
@@ -32,5 +36,16 @@ public class UserAddressServiceImpl implements UserAddressService{
         address.setLongitude(addressDTO.longitude());
 
         return new UserAddressDTO(repository.save(address));
+    }
+
+    @Override
+    @PreAuthorize("#id == authentication.principal.id.toString()")
+    public UserAddressDTO saveAddress(UserAddressDTO addressDTO, String id) {
+        User user = userService.findById(UUID.fromString(id));
+        UserAddress newAddress = new UserAddress(addressDTO);
+        newAddress.setUser(user);
+
+        UserAddress savedAddress = repository.save(newAddress);
+        return new UserAddressDTO(savedAddress);
     }
 }

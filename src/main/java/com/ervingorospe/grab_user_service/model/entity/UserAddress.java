@@ -1,5 +1,6 @@
 package com.ervingorospe.grab_user_service.model.entity;
 
+import com.ervingorospe.grab_user_service.model.DTO.UserAddressDTO;
 import jakarta.persistence.*;
 import java.util.UUID;
 
@@ -39,6 +40,17 @@ public class UserAddress {
     private User user;
 
     public UserAddress() {
+    }
+
+    public UserAddress(UserAddressDTO userAddressDTO) {
+        this.label = userAddressDTO.label();
+        this.street = userAddressDTO.street();
+        this.city = userAddressDTO.city();
+        this.state = userAddressDTO.state();
+        this.postalCode = userAddressDTO.postalCode();
+        this.country = userAddressDTO.country();
+        this.latitude = userAddressDTO.latitude();
+        this.longitude = userAddressDTO.longitude();
     }
 
     public UserAddress(String label, String street, String city, String state, String postalCode, String country, double latitude, double longitude, User user) {

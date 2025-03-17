@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService{
     @Override
     @PreAuthorize("#id == authentication.principal.id.toString()")
     public UserProfileDTO updateProfile(UserProfileDTO profile, String id) {
-        User user = repository.findById(UUID.fromString(id)).orElseThrow(() -> new UserNotFoundException("User not found with ID: " + id));
+        User user = this.findById(UUID.fromString(id));
 
         return userDetailService.update(user.getUserDetails(), profile);
     }
@@ -36,5 +36,16 @@ public class UserServiceImpl implements UserService{
         User user = repository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found with EMAIL: " + email));
 
         return new UserDTO(user);
+    }
+
+    @Override
+    public UserDTO findById(String id) {
+        User user = this.findById(UUID.fromString(id));
+
+        return new UserDTO(user);
+    }
+
+    public User findById(UUID id) {
+        return repository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found with ID: " + id));
     }
 }
