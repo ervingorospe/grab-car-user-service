@@ -1,14 +1,9 @@
 package com.ervingorospe.grab_user_service.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "user_addresses")
 public class UserAddress {
     @Id
@@ -39,6 +34,42 @@ public class UserAddress {
     @Column(nullable = false)
     private double longitude;
 
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -56,5 +87,45 @@ public class UserAddress {
         this.latitude = latitude;
         this.longitude = longitude;
         this.user = user;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public User getUser() {
+        return user;
     }
 }
