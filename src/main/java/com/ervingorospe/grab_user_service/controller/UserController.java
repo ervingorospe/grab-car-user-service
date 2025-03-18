@@ -29,13 +29,13 @@ public class UserController {
         return name;
     }
 
-    @PostMapping("/profile/{id}")
+    @PutMapping("/profile/{id}")
     public ResponseEntity<UserProfileDTO> updateProfile(@RequestBody @Valid UserProfileDTO profileDTO, @PathVariable String id) {
 //        log.info("Checking PreAuthorize: Route ID = {}, Principal = {}", id, SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateProfile(profileDTO, id));
     }
 
-    @PostMapping("/address/{id}")
+    @PutMapping("/address/{id}")
     public ResponseEntity<UserAddressDTO> updateUserAddress(@RequestBody @Valid UserAddressDTO addressDTO, @PathVariable String id) {
         return ResponseEntity.status(HttpStatus.OK).body(addressService.updateAddress(addressDTO, id));
     }
