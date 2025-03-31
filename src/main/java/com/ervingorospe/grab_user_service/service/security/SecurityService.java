@@ -1,14 +1,18 @@
 package com.ervingorospe.grab_user_service.service.security;
 
 import com.ervingorospe.grab_user_service.model.DTO.UserDTO;
+import com.ervingorospe.grab_user_service.model.DTO.UserEmailRequestDTO;
 import com.ervingorospe.grab_user_service.repository.UserAddressRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Slf4j
 @Component
 public class SecurityService {
     private final UserAddressRepo addressRepository;
@@ -30,5 +34,16 @@ public class SecurityService {
         }
 
         throw new AccessDeniedException("Unauthorized");
+    }
+
+    public boolean isOwnerOfAccount(UserEmailRequestDTO userEmailRequestDTO) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        log.info("Authentication object: {}", principal);
+
+        if (principal instanceof UserDTO userDTO) {
+            return userDTO.email().equals(userEmailRequestDTO.email());
+        }
+
+        return true;
     }
 }

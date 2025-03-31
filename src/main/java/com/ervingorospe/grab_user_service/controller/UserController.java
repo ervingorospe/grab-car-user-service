@@ -1,6 +1,8 @@
 package com.ervingorospe.grab_user_service.controller;
 
 import com.ervingorospe.grab_user_service.model.DTO.UserAddressDTO;
+import com.ervingorospe.grab_user_service.model.DTO.UserDTO;
+import com.ervingorospe.grab_user_service.model.DTO.UserEmailRequestDTO;
 import com.ervingorospe.grab_user_service.model.DTO.UserProfileDTO;
 import com.ervingorospe.grab_user_service.service.user.UserService;
 import com.ervingorospe.grab_user_service.service.userAddress.UserAddressService;
@@ -27,6 +29,11 @@ public class UserController {
     @PostMapping("/test/{name}")
     public String testApiGateway(@PathVariable String name) {
         return name;
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<UserDTO> getUserByEmail(@RequestBody @Valid UserEmailRequestDTO userEmailRequestDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findByEmail(userEmailRequestDTO));
     }
 
     @PutMapping("/profile/{id}")

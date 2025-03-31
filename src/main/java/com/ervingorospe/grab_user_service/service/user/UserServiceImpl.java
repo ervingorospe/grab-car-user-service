@@ -2,6 +2,7 @@ package com.ervingorospe.grab_user_service.service.user;
 
 import com.ervingorospe.grab_user_service.handler.error.UserNotFoundException;
 import com.ervingorospe.grab_user_service.model.DTO.UserDTO;
+import com.ervingorospe.grab_user_service.model.DTO.UserEmailRequestDTO;
 import com.ervingorospe.grab_user_service.model.DTO.UserProfileDTO;
 import com.ervingorospe.grab_user_service.model.entity.User;
 import com.ervingorospe.grab_user_service.repository.UserRepo;
@@ -36,6 +37,12 @@ public class UserServiceImpl implements UserService{
         User user = repository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found with EMAIL: " + email));
 
         return new UserDTO(user);
+    }
+
+    @Override
+    @PreAuthorize("@securityService.isOwnerOfAccount(#userEmailRequestDTO)")
+    public UserDTO findByEmail(UserEmailRequestDTO userEmailRequestDTO) {
+        return this.findByEmail(userEmailRequestDTO.email());
     }
 
     @Override
