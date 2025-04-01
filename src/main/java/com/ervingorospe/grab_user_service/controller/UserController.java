@@ -32,7 +32,8 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public ResponseEntity<UserDTO> getUserByEmail(@RequestBody @Valid UserEmailRequestDTO userEmailRequestDTO) {
+    public ResponseEntity<UserDTO> getUserByEmail(@RequestParam String email) {
+        UserEmailRequestDTO userEmailRequestDTO = new UserEmailRequestDTO(email);
         return ResponseEntity.status(HttpStatus.OK).body(userService.findByEmail(userEmailRequestDTO));
     }
 
